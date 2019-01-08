@@ -69,12 +69,12 @@ class Contact
      * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
      * @Assert\File(mimeTypes={ "image/jpeg","image/png" })
      */
-    private $filename;
+    private $picture;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture;
+    private $filename;
 
 
     public function getId(): ?int
@@ -190,26 +190,26 @@ class Contact
         return $this;
     }
 
-    public function getProfile(): ?UploadedFile
+    public function getProfile(): ?string
     {
-        return $this->picture;
+        return $this->filename;
     }
 
-    public function setProfile(?UploadedFile $picture): self
+    public function setProfile(?string $picture): self
     {
-        $this->picture = $picture;
+        $this->filename = $picture;
 
         return $this;
     }
 
-    public function setPicture(?string $fileName): self
+    public function setPicture(?UploadedFile $fileName): self
     {
         $this->picture = $fileName;
         return $this;
     }
 
-    public function getPicture(): string
+    public function getPicture()
     {
-        return $this->filename;
+        return $this->picture;
     }
 }

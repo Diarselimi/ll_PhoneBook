@@ -58,6 +58,7 @@ class ContactController extends Controller
             $contact->setProfile($fileName);
 
             $entityManager->persist($contact);
+            $entityManager->persist($contact);
             $entityManager->flush();
 
             return $this->redirectToRoute('contact_index');
