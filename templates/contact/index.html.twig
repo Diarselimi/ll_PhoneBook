@@ -34,9 +34,9 @@
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.birthday ? contact.birthday|date('Y-m-d') : '' }}</td>
                 <td>{{ contact.picture }}</td>
-                <td>
-                    <a href="{{ path('contact_show', {'id': contact.id}) }}">show</a>
-                    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
+                <td >
+                    <a class="btn btn-info" href="{{ path('contact_show', {'id': contact.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('contact_new') }}">Create new</a>
+    <a class="btn btn-success" href="{{ path('contact_new') }}">Create new</a>
 {% endblock %}

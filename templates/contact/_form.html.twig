@@ -1,4 +1,14 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        document.getElementById("contact_country").onchange=countryChanged;
+
+        function countryChanged(event) {
+            document.getElementById("contact_phone_number").value = event.target[event.target.selectedIndex].getAttribute('data-country_code');
+        }
+    </script>
+{% endblock %}

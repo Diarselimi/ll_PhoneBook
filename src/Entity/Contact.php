@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Contact
 {
+    const PROFILE_PATH_FILE = '/uploads/pictures';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,6 +31,7 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/\w*\d+$/")
      */
     private $street_number;
 
@@ -188,6 +190,11 @@ class Contact
         $this->birthday = $birthday;
 
         return $this;
+    }
+
+    public function getProfileWithPath(): ?string
+    {
+        return Contact::PROFILE_PATH_FILE.'/'.$this->filename;
     }
 
     public function getProfile(): ?string

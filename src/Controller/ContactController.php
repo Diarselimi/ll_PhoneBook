@@ -39,25 +39,8 @@ class ContactController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $file = $contact->getPicture();
+            $this->uploadPicture($contact);
 
-            $fileName = date('Ymdhis').'.'.$file->guessExtension();
-
-            // Move the file to the directory where brochures are stored
-            try {
-                $file->move(
-                    $this->getParameter('profile_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $contact->setProfile($fileName);
-
-            $entityManager->persist($contact);
             $entityManager->persist($contact);
             $entityManager->flush();
 
@@ -89,6 +72,10 @@ class ContactController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->uploadPicture($contact);
+
+            $this->getDoctrine()->getManager()->persist($contact);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('contact_index', [
@@ -114,5 +101,29 @@ class ContactController extends Controller
         }
 
         return $this->redirectToRoute('contact_index');
+    }
+
+    /**
+     * @param Contact $contact
+     */
+    private function uploadPicture(Contact &$contact)
+    {
+        $file = $contact->getPicture();
+
+        $fileName = date('Ymdhis') . '.' . $file->guessExtension();
+
+        // Move the file to the directory where brochures are stored
+        try {
+            $file->move(
+                $this->getParameter('profile_directory'),
+                $fileName
+            );
+        } catch (FileException $e) {
+            // ... handle exception if something happens during file upload
+        }
+
+        // updates the 'brochure' property to store the PDF file name
+        // instead of its contents
+        $contact->setProfile($fileName);
     }
 }

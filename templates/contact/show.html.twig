@@ -32,6 +32,10 @@
                 <td>{{ contact.city }}</td>
             </tr>
             <tr>
+                <th>Country</th>
+                <td>{{ contact.country }}</td>
+            </tr>
+            <tr>
                 <th>Phone_number</th>
                 <td>{{ contact.phoneNumber }}</td>
             </tr>
@@ -45,14 +49,14 @@
             </tr>
             <tr>
                 <th>Picture</th>
-                <td>{{ contact.picture }}</td>
+                <td><a href="{{ contact.profileWithPath }}" target="_blank"><img src="{{ contact.profileWithPath }}" width="200px" alt=""></a></td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('contact_index') }}">back to list</a>
+    <a class="btn btn-dark" href="{{ path('contact_index') }}">back to list</a>
 
-    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
 
     {{ include('contact/_delete_form.html.twig') }}
 {% endblock %}

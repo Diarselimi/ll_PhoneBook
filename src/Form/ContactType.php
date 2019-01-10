@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,9 +20,18 @@ class ContactType extends AbstractType
         $builder
             ->add('firstname')
             ->add('lastname')
-            ->add('street_number')
+            ->add('street_number', TextType::class, [
+                'label' => 'Street name and number'
+            ])
             ->add('zip')
             ->add('city')
+            ->add('country', EntityType::class, [
+                'class' => Country::class,
+                'placeholder' => 'select a country',
+                'choice_attr' => function($choiceVal, $key, $val) {
+                    return ['data-country_code' => $choiceVal->getCode()];
+                }
+            ])
             ->add('phone_number')
             ->add('email')
             ->add('birthday', DateType::class, [
@@ -31,9 +41,7 @@ class ContactType extends AbstractType
                 ]
             ])
             ->add('picture', FileType::class)
-            ->add('country', EntityType::class, [
-                'class' => Country::class
-            ])
+
         ;
     }
 
